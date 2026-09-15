@@ -1,7 +1,9 @@
+'use client'
+
 import { useEffect, useMemo, useState } from 'react'
-import { quizzes } from '../data/quizzes.js'
-import FilterBar from '../components/FilterBar.jsx'
-import QuizPlayer from '../components/QuizPlayer.jsx'
+import { quizzes } from '@/data/quizzes.js'
+import FilterBar from '@/components/FilterBar.jsx'
+import QuizPlayer from '@/components/QuizPlayer.jsx'
 
 const STORAGE_KEY = 'summit-math-gamify-stats-v1'
 
@@ -86,11 +88,7 @@ export default function Gamify() {
       </div>
 
       {activeQuiz ? (
-        <QuizPlayer
-          quiz={activeQuiz}
-          onExit={() => setActiveQuizId(null)}
-          onComplete={handleComplete}
-        />
+        <QuizPlayer quiz={activeQuiz} onExit={() => setActiveQuizId(null)} onComplete={handleComplete} />
       ) : (
         <div className="quiz-picker">
           <FilterBar

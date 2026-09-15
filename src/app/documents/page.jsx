@@ -1,7 +1,9 @@
+'use client'
+
 import { useMemo, useState } from 'react'
-import { subjects } from '../data/subjects.js'
-import SubjectCard from '../components/SubjectCard.jsx'
-import FilterBar from '../components/FilterBar.jsx'
+import { subjects } from '@/data/subjects.js'
+import SubjectCard from '@/components/SubjectCard.jsx'
+import FilterBar from '@/components/FilterBar.jsx'
 
 function matchesQuery(subject, query) {
   if (!query.trim()) return true

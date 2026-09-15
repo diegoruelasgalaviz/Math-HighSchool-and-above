@@ -1,11 +1,11 @@
-import { Link } from 'react-router-dom'
+import Link from 'next/link'
 
 export default function NotFound() {
   return (
     <section className="section" style={{ textAlign: 'center', padding: '96px 24px' }}>
       <h1>404</h1>
       <p>We couldn&rsquo;t find that page.</p>
-      <Link className="btn btn-primary" to="/">
+      <Link className="btn btn-primary" href="/">
         Back to Home
       </Link>
     </section>

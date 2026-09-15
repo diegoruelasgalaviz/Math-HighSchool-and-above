@@ -1,19 +1,25 @@
+import type { Metadata } from 'next'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
-import { subjects, getSubjectById } from '@/data/subjects.js'
-import LectureContent from '@/components/LectureContent.jsx'
+import { subjects, getSubjectById } from '@/data/subjects'
+import LectureContent from '@/components/LectureContent'
+import type { Level } from '@/data/types'
 
-const levelPillClass = {
+const levelPillClass: Record<Level, string> = {
   'High School': 'pill-hs',
   Undergraduate: 'pill-undergrad',
   Graduate: 'pill-grad',
+}
+
+interface SubjectPageProps {
+  params: { subjectId: string }
 }
 
 export function generateStaticParams() {
   return subjects.map((subject) => ({ subjectId: subject.id }))
 }
 
-export function generateMetadata({ params }) {
+export function generateMetadata({ params }: SubjectPageProps): Metadata {
   const subject = getSubjectById(params.subjectId)
   if (!subject) return {}
   return {
@@ -22,7 +28,7 @@ export function generateMetadata({ params }) {
   }
 }
 
-export default function SubjectDetail({ params }) {
+export default function SubjectDetail({ params }: SubjectPageProps) {
   const subject = getSubjectById(params.subjectId)
   if (!subject) notFound()
 

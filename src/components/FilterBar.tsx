@@ -1,6 +1,24 @@
-import { LEVELS, DIFFICULTIES } from '../data/subjects.js'
+import type { ChangeEvent } from 'react'
+import { LEVELS, DIFFICULTIES } from '../data/subjects'
+import type { Difficulty, Level } from '../data/types'
 
-export default function FilterBar({ query, onQueryChange, level, onLevelChange, difficulty, onDifficultyChange }) {
+interface FilterBarProps {
+  query: string
+  onQueryChange: (value: string) => void
+  level: Level | 'All'
+  onLevelChange: (value: Level | 'All') => void
+  difficulty: Difficulty | 'All'
+  onDifficultyChange: (value: Difficulty | 'All') => void
+}
+
+export default function FilterBar({
+  query,
+  onQueryChange,
+  level,
+  onLevelChange,
+  difficulty,
+  onDifficultyChange,
+}: FilterBarProps) {
   return (
     <div className="filter-bar">
       <div className="search-input-wrap">
@@ -12,7 +30,7 @@ export default function FilterBar({ query, onQueryChange, level, onLevelChange, 
           type="text"
           placeholder="Search subjects or topics (e.g. “derivative”, “eigenvalue”)…"
           value={query}
-          onChange={(e) => onQueryChange(e.target.value)}
+          onChange={(e: ChangeEvent<HTMLInputElement>) => onQueryChange(e.target.value)}
           aria-label="Search subjects or topics"
         />
       </div>

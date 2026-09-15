@@ -1,6 +1,9 @@
 node_modules
 dist
 dist-ssr
+out
+.next
+next-env.d.ts
 *.local
 .DS_Store
 .vscode/*

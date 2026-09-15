@@ -1,6 +1,6 @@
-import { Link } from 'react-router-dom'
-import { subjects, LEVELS } from '../data/subjects.js'
-import SubjectCard from '../components/SubjectCard.jsx'
+import Link from 'next/link'
+import { subjects } from '@/data/subjects.js'
+import SubjectCard from '@/components/SubjectCard.jsx'
 
 const totalLectures = subjects.reduce((sum, subj) => sum + subj.lectures.length, 0)
 
@@ -46,10 +46,10 @@ export default function Landing() {
               what you know.
             </p>
             <div className="hero-cta">
-              <Link className="btn btn-primary" to="/documents">
+              <Link className="btn btn-primary" href="/documents">
                 Browse the Documents Library
               </Link>
-              <Link className="btn btn-secondary" to="/gamify">
+              <Link className="btn btn-secondary" href="/gamify">
                 Try the Practice Arena
               </Link>
             </div>
@@ -100,7 +100,7 @@ export default function Landing() {
       <section className="section">
         <div className="section-head">
           <h2>Featured subjects</h2>
-          <Link to="/documents">See all {subjects.length} subjects &rarr;</Link>
+          <Link href="/documents">See all {subjects.length} subjects &rarr;</Link>
         </div>
         <div className="grid">
           {featured.map((subject) => (

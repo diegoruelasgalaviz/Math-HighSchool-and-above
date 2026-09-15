@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom'
+import Link from 'next/link'
 
 const levelPillClass = {
   'High School': 'pill-hs',
@@ -8,7 +8,7 @@ const levelPillClass = {
 
 export default function SubjectCard({ subject }) {
   return (
-    <Link to={`/documents/${subject.id}`} className="card" style={{ display: 'block', textDecoration: 'none' }}>
+    <Link href={`/documents/${subject.id}`} className="card" style={{ display: 'block', textDecoration: 'none' }}>
       <div className="card-icon" style={{ background: 'var(--accent-soft)', color: 'var(--accent)' }}>
         {subject.icon}
       </div>

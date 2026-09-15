@@ -1,7 +1,7 @@
-import { Link, useParams } from 'react-router-dom'
-import { subjects, getSubjectById } from '../data/subjects.js'
-import LectureContent from '../components/LectureContent.jsx'
-import NotFound from './NotFound.jsx'
+import Link from 'next/link'
+import { notFound } from 'next/navigation'
+import { subjects, getSubjectById } from '@/data/subjects.js'
+import LectureContent from '@/components/LectureContent.jsx'
 
 const levelPillClass = {
   'High School': 'pill-hs',
@@ -9,13 +9,24 @@ const levelPillClass = {
   Graduate: 'pill-grad',
 }
 
-export default function SubjectDetail() {
-  const { subjectId } = useParams()
-  const subject = getSubjectById(subjectId)
+export function generateStaticParams() {
+  return subjects.map((subject) => ({ subjectId: subject.id }))
+}
 
-  if (!subject) return <NotFound />
+export function generateMetadata({ params }) {
+  const subject = getSubjectById(params.subjectId)
+  if (!subject) return {}
+  return {
+    title: `${subject.name} — Summit Math`,
+    description: subject.summary,
+  }
+}
 
-  const idx = subjects.findIndex((s) => s.id === subjectId)
+export default function SubjectDetail({ params }) {
+  const subject = getSubjectById(params.subjectId)
+  if (!subject) notFound()
+
+  const idx = subjects.findIndex((s) => s.id === params.subjectId)
   const prev = subjects[idx - 1]
   const next = subjects[idx + 1]
 
@@ -23,7 +34,7 @@ export default function SubjectDetail() {
     <section className="section">
       <div className="subject-header">
         <div className="breadcrumb">
-          <Link to="/documents">Documents</Link> / {subject.name}
+          <Link href="/documents">Documents</Link> / {subject.name}
         </div>
         <div style={{ display: 'flex', gap: 8, marginBottom: 12 }}>
           <span className={`pill ${levelPillClass[subject.level]}`}>{subject.level}</span>
@@ -52,16 +63,8 @@ export default function SubjectDetail() {
       </div>
 
       <div className="subject-nav-footer">
-        {prev ? (
-          <Link to={`/documents/${prev.id}`}>&larr; {prev.name}</Link>
-        ) : (
-          <span />
-        )}
-        {next ? (
-          <Link to={`/documents/${next.id}`}>{next.name} &rarr;</Link>
-        ) : (
-          <span />
-        )}
+        {prev ? <Link href={`/documents/${prev.id}`}>&larr; {prev.name}</Link> : <span />}
+        {next ? <Link href={`/documents/${next.id}`}>{next.name} &rarr;</Link> : <span />}
       </div>
     </section>
   )

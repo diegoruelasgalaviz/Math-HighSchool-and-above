@@ -1,6 +1,7 @@
 // Quiz banks for the Gamify / Practice Arena page. Client-side only.
+import type { Quiz } from './types'
 
-export const quizzes = [
+export const quizzes: Quiz[] = [
   {
     id: 'algebra-1-quiz',
     subjectId: 'algebra-1',
@@ -344,6 +345,6 @@ export const quizzes = [
   },
 ]
 
-export function getQuizzesBySubject(subjectId) {
+export function getQuizzesBySubject(subjectId: string): Quiz[] {
   return quizzes.filter((quiz) => quiz.subjectId === subjectId)
 }

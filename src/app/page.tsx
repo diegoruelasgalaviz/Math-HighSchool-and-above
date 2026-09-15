@@ -1,6 +1,7 @@
 import Link from 'next/link'
-import { subjects } from '@/data/subjects.js'
-import SubjectCard from '@/components/SubjectCard.jsx'
+import { subjects } from '@/data/subjects'
+import SubjectCard from '@/components/SubjectCard'
+import type { Subject } from '@/data/types'
 
 const totalLectures = subjects.reduce((sum, subj) => sum + subj.lectures.length, 0)
 
@@ -12,7 +13,9 @@ const featuredIds = [
   'probability-statistics',
   'engineering-mathematics',
 ]
-const featured = featuredIds.map((id) => subjects.find((s) => s.id === id)).filter(Boolean)
+const featured = featuredIds
+  .map((id) => subjects.find((s) => s.id === id))
+  .filter((s): s is Subject => Boolean(s))
 
 const pathSteps = [
   {

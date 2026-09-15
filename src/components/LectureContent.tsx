@@ -1,4 +1,6 @@
-export default function LectureContent({ lecture }) {
+import type { Lecture } from '@/data/types'
+
+export default function LectureContent({ lecture }: { lecture: Lecture }) {
   return (
     <div className="lecture-content">
       <h3 id={lecture.id}>{lecture.title}</h3>

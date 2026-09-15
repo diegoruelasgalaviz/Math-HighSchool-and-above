@@ -1,11 +1,12 @@
 'use client'
 
 import { useMemo, useState } from 'react'
-import { subjects } from '@/data/subjects.js'
-import SubjectCard from '@/components/SubjectCard.jsx'
-import FilterBar from '@/components/FilterBar.jsx'
+import { subjects } from '@/data/subjects'
+import SubjectCard from '@/components/SubjectCard'
+import FilterBar from '@/components/FilterBar'
+import type { Difficulty, Level, Subject } from '@/data/types'
 
-function matchesQuery(subject, query) {
+function matchesQuery(subject: Subject, query: string): boolean {
   if (!query.trim()) return true
   const q = query.trim().toLowerCase()
   if (subject.name.toLowerCase().includes(q)) return true
@@ -16,8 +17,8 @@ function matchesQuery(subject, query) {
 
 export default function Documents() {
   const [query, setQuery] = useState('')
-  const [level, setLevel] = useState('All')
-  const [difficulty, setDifficulty] = useState('All')
+  const [level, setLevel] = useState<Level | 'All'>('All')
+  const [difficulty, setDifficulty] = useState<Difficulty | 'All'>('All')
 
   const filtered = useMemo(() => {
     return subjects.filter((subject) => {

@@ -1,11 +1,16 @@
 // All content is authored inline — no backend, no CMS, no network calls.
-// Levels: 'High School' | 'Undergraduate' | 'Graduate'
-// Difficulty: 'Beginner' | 'Intermediate' | 'Advanced'
+import type { Difficulty, Example, Level, Section, Subject } from './types'
 
-export const LEVELS = ['High School', 'Undergraduate', 'Graduate']
-export const DIFFICULTIES = ['Beginner', 'Intermediate', 'Advanced']
+export const LEVELS: Level[] = ['High School', 'Undergraduate', 'Graduate']
+export const DIFFICULTIES: Difficulty[] = ['Beginner', 'Intermediate', 'Advanced']
 
-const s = (heading, paragraphs, opts = {}) => ({
+interface SectionOpts {
+  formulas?: string[]
+  example?: Example | null
+  list?: string[] | null
+}
+
+const s = (heading: string, paragraphs: string[], opts: SectionOpts = {}): Section => ({
   heading,
   paragraphs,
   formulas: opts.formulas || [],
@@ -13,7 +18,7 @@ const s = (heading, paragraphs, opts = {}) => ({
   list: opts.list || null,
 })
 
-export const subjects = [
+export const subjects: Subject[] = [
   // ---------------------------------------------------------------- HIGH SCHOOL
   {
     id: 'pre-algebra',
@@ -1518,6 +1523,6 @@ export const subjects = [
   },
 ]
 
-export function getSubjectById(id) {
+export function getSubjectById(id: string): Subject | undefined {
   return subjects.find((subj) => subj.id === id)
 }

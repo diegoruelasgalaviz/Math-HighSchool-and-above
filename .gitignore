@@ -4,6 +4,7 @@ dist-ssr
 out
 .next
 next-env.d.ts
+*.tsbuildinfo
 *.local
 .DS_Store
 .vscode/*

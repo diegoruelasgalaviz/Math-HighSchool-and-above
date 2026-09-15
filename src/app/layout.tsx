@@ -1,8 +1,10 @@
-import Nav from '@/components/Nav.jsx'
-import Footer from '@/components/Footer.jsx'
+import type { Metadata } from 'next'
+import type { ReactNode } from 'react'
+import Nav from '@/components/Nav'
+import Footer from '@/components/Footer'
 import './globals.css'
 
-export const metadata = {
+export const metadata: Metadata = {
   title: 'Summit Math — Learn Math, High School to Graduate',
   description:
     'A free math reference and study site covering high school through engineering-graduate mathematics, with lectures, filters, and a gamified practice mode.',
@@ -11,7 +13,7 @@ export const metadata = {
   },
 }
 
-export default function RootLayout({ children }) {
+export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="en">
       <body>

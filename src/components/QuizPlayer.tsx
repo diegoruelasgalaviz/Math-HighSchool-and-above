@@ -1,10 +1,24 @@
 'use client'
 
 import { useState } from 'react'
+import type { Quiz } from '@/data/types'
 
-export default function QuizPlayer({ quiz, onExit, onComplete }) {
+export interface QuizResult {
+  quizId: string
+  score: number
+  total: number
+  bestStreak: number
+}
+
+interface QuizPlayerProps {
+  quiz: Quiz
+  onExit: () => void
+  onComplete?: (result: QuizResult) => void
+}
+
+export default function QuizPlayer({ quiz, onExit, onComplete }: QuizPlayerProps) {
   const [index, setIndex] = useState(0)
-  const [selected, setSelected] = useState(null)
+  const [selected, setSelected] = useState<number | null>(null)
   const [score, setScore] = useState(0)
   const [streak, setStreak] = useState(0)
   const [bestStreak, setBestStreak] = useState(0)
@@ -14,7 +28,7 @@ export default function QuizPlayer({ quiz, onExit, onComplete }) {
   const question = quiz.questions[index]
   const isLast = index === total - 1
 
-  function selectOption(optIndex) {
+  function selectOption(optIndex: number) {
     if (selected !== null) return
     setSelected(optIndex)
     const correct = optIndex === question.answer

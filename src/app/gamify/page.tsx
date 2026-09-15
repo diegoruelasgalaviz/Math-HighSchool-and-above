@@ -1,23 +1,27 @@
 'use client'
 
 import { useEffect, useMemo, useState } from 'react'
-import { quizzes } from '@/data/quizzes.js'
-import FilterBar from '@/components/FilterBar.jsx'
-import QuizPlayer from '@/components/QuizPlayer.jsx'
+import { quizzes } from '@/data/quizzes'
+import FilterBar from '@/components/FilterBar'
+import QuizPlayer from '@/components/QuizPlayer'
+import type { QuizResult } from '@/components/QuizPlayer'
+import type { Difficulty, GamifyStats, Level } from '@/data/types'
 
 const STORAGE_KEY = 'summit-math-gamify-stats-v1'
 
-function loadStats() {
+const EMPTY_STATS: GamifyStats = { totalCorrect: 0, totalAnswered: 0, quizzesCompleted: 0, bestStreak: 0 }
+
+function loadStats(): GamifyStats {
   try {
     const raw = window.localStorage.getItem(STORAGE_KEY)
-    if (!raw) return { totalCorrect: 0, totalAnswered: 0, quizzesCompleted: 0, bestStreak: 0 }
+    if (!raw) return EMPTY_STATS
     return JSON.parse(raw)
   } catch {
-    return { totalCorrect: 0, totalAnswered: 0, quizzesCompleted: 0, bestStreak: 0 }
+    return EMPTY_STATS
   }
 }
 
-function saveStats(stats) {
+function saveStats(stats: GamifyStats) {
   try {
     window.localStorage.setItem(STORAGE_KEY, JSON.stringify(stats))
   } catch {
@@ -27,10 +31,10 @@ function saveStats(stats) {
 
 export default function Gamify() {
   const [query, setQuery] = useState('')
-  const [level, setLevel] = useState('All')
-  const [difficulty, setDifficulty] = useState('All')
-  const [activeQuizId, setActiveQuizId] = useState(null)
-  const [stats, setStats] = useState(() => ({ totalCorrect: 0, totalAnswered: 0, quizzesCompleted: 0, bestStreak: 0 }))
+  const [level, setLevel] = useState<Level | 'All'>('All')
+  const [difficulty, setDifficulty] = useState<Difficulty | 'All'>('All')
+  const [activeQuizId, setActiveQuizId] = useState<string | null>(null)
+  const [stats, setStats] = useState<GamifyStats>(() => EMPTY_STATS)
 
   useEffect(() => {
     setStats(loadStats())
@@ -48,7 +52,7 @@ export default function Gamify() {
 
   const activeQuiz = quizzes.find((q) => q.id === activeQuizId)
 
-  function handleComplete({ score, total, bestStreak }) {
+  function handleComplete({ score, total, bestStreak }: QuizResult) {
     setStats((prev) => {
       const next = {
         totalCorrect: prev.totalCorrect + score,

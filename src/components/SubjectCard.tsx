@@ -1,12 +1,13 @@
 import Link from 'next/link'
+import type { Level, Subject } from '@/data/types'
 
-const levelPillClass = {
+const levelPillClass: Record<Level, string> = {
   'High School': 'pill-hs',
   Undergraduate: 'pill-undergrad',
   Graduate: 'pill-grad',
 }
 
-export default function SubjectCard({ subject }) {
+export default function SubjectCard({ subject }: { subject: Subject }) {
   return (
     <Link href={`/documents/${subject.id}`} className="card" style={{ display: 'block', textDecoration: 'none' }}>
       <div className="card-icon" style={{ background: 'var(--accent-soft)', color: 'var(--accent)' }}>
